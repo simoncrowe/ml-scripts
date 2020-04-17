@@ -10,13 +10,7 @@ import click
 import requests
 from selenium import webdriver
 
-
-def get_chrome_driver():
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--disable-dev-shm-usage')
-    return webdriver.Chrome(chrome_options=chrome_options)
+from util import get_chrome_driver
 
 
 def get_hashtag_url(hashtag):
@@ -47,11 +41,11 @@ def save_image_text(text_dict):
     required=False,
     help='How many times to retry when an exception is encountered.'
 )
-def scrape(hashtag, number_of_images, images_path, retry_count):
+@click.option('--headless', is_flag=True)
+def scrape(hashtag, number_of_images, images_path, retry_count, headless):
     os.chdir(images_path)
-    
 
-    drv = get_chrome_driver()
+    drv = get_chrome_driver(headless)
     drv.get(get_hashtag_url(hashtag))
     
     scraped_text = {}
