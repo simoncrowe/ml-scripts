@@ -114,7 +114,7 @@ def scrape_memes(output_dir, meme_slugs):
     split_slugs = (slug.strip() for slug in meme_slugs.split(',') if slug)
 
     for slug in split_slugs:
-        filename_friendly_slug = ''.join(c for c in slug if c.isalnum())
+        filename_friendly_slug = ''.join(c for c in slug if c.isalnum() or c == '-')
         meme_output_dir = path.join(output_dir, filename_friendly_slug)
         
         print(f'Saving images and text for {slug} in {meme_output_dir}')
