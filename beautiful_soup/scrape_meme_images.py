@@ -36,7 +36,7 @@ def full_size_image_sources_and_alt_text_from_tags(tags):
 def get_page_data(meme_slug, page_number, user_agent):
     print(f'Getting page {page_number}...')
     page_url = f'{MEMES_BASE_URL}/{meme_slug}/photos/page/{page_number}'
-    page_response = requests.get(page_url, headers={'User-Agent': user_agent}, verify=False)
+    page_response = requests.get(page_url, headers={'User-Agent': user_agent})
 
     if page_response.status_code == 200:
         soup = BeautifulSoup(page_response.content, 'html.parser')
@@ -66,7 +66,7 @@ def scrape_meme(output_dir, meme_slug):
         all_src_alt_pairs.update(new_src_alt_pairs)
         
         for src, alt in new_src_alt_pairs:
-            image_response = requests.get(src, verify=False, headers={'User-Agent': user_agent})
+            image_response = requests.get(src, headers={'User-Agent': user_agent})
             
             if image_response.status_code == 200:
                 image_uuid = str(uuid4())
@@ -108,7 +108,7 @@ def scrape_meme(output_dir, meme_slug):
     '-m', 
     '--meme-slugs', 
     required=True, 
-    help='Comma-separated list of URL-friedly slugs for meme names.'
+    help='Comma-separated list of URL slugs for meme names.'
 )
 def scrape_memes(output_dir, meme_slugs):
     split_slugs = (slug.strip() for slug in meme_slugs.split(',') if slug)
