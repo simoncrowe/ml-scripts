@@ -35,7 +35,7 @@ def full_size_image_sources_and_alt_text_from_tags(tags):
 
 def get_page_data(meme_slug, page_number, user_agent):
     print(f'Getting page {page_number}...')
-    page_url = f'{MEMES_BASE_URL}/{meme_slug}/photos/page/{page_number}'
+    page_url = f'{MEMES_BASE_URL}/{meme_slug}/photos/page/{page_number}?nsfw=true'
     page_response = requests.get(page_url, headers={'User-Agent': user_agent})
 
     if page_response.status_code == 200:
